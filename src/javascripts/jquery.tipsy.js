@@ -180,16 +180,16 @@
         }
         
         if (!options.live) this.each(function() { get(this); });
-        
+
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
+            var context  = options.live ? $(this.context) : this,
+                selector = options.live ? this.selector : null,
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+
+            context.on(eventIn, selector, enter).on(eventOut, selector, leave);
         }
-        
         return this;
-        
     };
     
     $.fn.tipsy.defaults = {
